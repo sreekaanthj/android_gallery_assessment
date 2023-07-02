@@ -16,5 +16,5 @@ data class ImageInfo(
 )
 
 fun ImageInfo.fullDetails(): String {
-    return "[$date] $title \n $explanation"
+    return "[$date] $title \n\n $explanation"
 }

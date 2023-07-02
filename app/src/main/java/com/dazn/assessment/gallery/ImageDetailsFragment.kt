@@ -57,6 +57,10 @@ class ImageDetailsFragment : Fragment() {
             _binding?.vpImageInfo?.adapter = it?.let { it1 -> ImageInfoViewAdapter(it1) }
 
             _binding?.vpImageInfo?.setCurrentItem(args.selectedImageIndex, false)
+
+            _binding?.vpImageInfo?.offscreenPageLimit = 1
+
+
         }
     }
 
