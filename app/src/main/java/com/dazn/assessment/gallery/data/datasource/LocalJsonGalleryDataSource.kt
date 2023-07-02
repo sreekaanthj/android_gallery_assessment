@@ -19,7 +19,8 @@ class LocalJsonGalleryDataSource @Inject constructor(@ApplicationContext private
             Timber.v("getImages: loading content from file $jsonFileName")
 
             //load json content from file
-            val jsonContent = context.assets.open(jsonFileName).bufferedReader().use { it.readText() }
+            val inputStream = context.assets.open(jsonFileName)
+            val jsonContent = inputStream.bufferedReader().use { it.readText() }
 
             Timber.v("getImages: json cotnent available, content len: ${jsonContent.length}")
             // create type token for GSON to parse the typed object

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.dazn.assessment.gallery.data.model.ImageInfo
 import com.dazn.assessment.gallery.databinding.FragmentGridBinding
 import com.dazn.assessment.gallery.ui.GalleryViewModel
@@ -56,6 +55,12 @@ class GridFragment : Fragment() {
 
         Timber.v("GridFragment onViewCreated Called...")
 
+        // show loading indicator
+        galleryViewModel.showLoading.observe(viewLifecycleOwner) {
+            _binding?.tvLoading?.visibility = if (it) View.VISIBLE else View.INVISIBLE
+        }
+
+        // load images in grid
         galleryViewModel.galleryImages.observe(viewLifecycleOwner) {
             _binding?.imagesGridRv?.adapter = it?.let { it1 ->
                 GridRecyclerViewAdapter(it1,
@@ -69,10 +74,8 @@ class GridFragment : Fragment() {
             }
         }
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_GridFragment_to_ImageDetailsFragment)
-        }
 
+        // request loading data -- can be moved to init.
         galleryViewModel.loadGallery()
     }
 

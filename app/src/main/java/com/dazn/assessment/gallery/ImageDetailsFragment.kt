@@ -47,10 +47,6 @@ class ImageDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_ImageDetailsFragment_to_GridFragment)
-        }
-
         galleryViewModel.galleryImages.observe(viewLifecycleOwner) {
             Timber.v("load images in viewpager2")
 
@@ -58,9 +54,8 @@ class ImageDetailsFragment : Fragment() {
 
             _binding?.vpImageInfo?.setCurrentItem(args.selectedImageIndex, false)
 
+            // experiment to reduce app memory footprint.
             _binding?.vpImageInfo?.offscreenPageLimit = 1
-
-
         }
     }
 

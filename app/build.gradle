@@ -24,7 +24,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "boolean", "ENABLE_LOGS", "true"
+        }
+
         release {
+            buildConfigField "boolean", "ENABLE_LOGS", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -64,7 +69,7 @@ dependencies {
     kapt 'com.google.dagger:hilt-compiler:2.46.1'
 
     // hilt -- For instrumentation tests
-    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.46.1'
+    androidTestImplementation 'com.google.dagger:hilt-android-testing:2.46.1'
     kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46.1'
 
     // hilt -- For local unit tests
@@ -74,6 +79,7 @@ dependencies {
 
     //coroutines
     runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2"
 
 
     //coil -- coroutine image loading library
