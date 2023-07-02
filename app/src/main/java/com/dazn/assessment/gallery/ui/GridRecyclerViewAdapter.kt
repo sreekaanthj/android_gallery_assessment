@@ -5,22 +5,27 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
 import com.dazn.assessment.gallery.R
 import com.dazn.assessment.gallery.data.model.ImageInfo
 import com.dazn.assessment.gallery.databinding.ItemGridImageBinding
 
-class GridRecyclerViewAdapter(private val images: List<ImageInfo>) :
+class GridRecyclerViewAdapter(
+    private val images: List<ImageInfo>,
+    private val gridItemClickListener: GridItemClickListener
+) :
     RecyclerView.Adapter<GridRecyclerViewAdapter.GridItemViewHolder>() {
 
     private val TAG = "GridRecyclerViewAdapter"
+
+    interface GridItemClickListener {
+        fun onGridItemClick(item: ImageInfo)
+    }
 
     class GridItemViewHolder(
         private val binding: ItemGridImageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: ImageInfo) {
+        fun bind(data: ImageInfo, gridItemClickListener: GridItemClickListener) {
             Log.i("GridRecyclerViewAdapter", "bind: loading image:: ${data.title}")
             binding.sampleTxt.text = data.date
 
@@ -29,6 +34,8 @@ class GridRecyclerViewAdapter(private val images: List<ImageInfo>) :
                 placeholder(R.drawable.baseline_downloading_24)
                 //transformations(RoundedCornersTransformation(8.0F))
             }
+
+            binding.root.setOnClickListener { gridItemClickListener.onGridItemClick(data) }
         }
     }
 
@@ -41,6 +48,6 @@ class GridRecyclerViewAdapter(private val images: List<ImageInfo>) :
     override fun getItemCount(): Int = images.size
 
     override fun onBindViewHolder(holder: GridItemViewHolder, position: Int) {
-        holder.bind(images[position])
+        holder.bind(images[position], gridItemClickListener)
     }
 }

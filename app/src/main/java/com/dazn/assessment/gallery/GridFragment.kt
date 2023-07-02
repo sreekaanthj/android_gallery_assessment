@@ -1,6 +1,7 @@
 package com.dazn.assessment.gallery
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.dazn.assessment.gallery.data.model.ImageInfo
 import com.dazn.assessment.gallery.databinding.FragmentGridBinding
 import com.dazn.assessment.gallery.ui.GalleryViewModel
 import com.dazn.assessment.gallery.ui.GridRecyclerViewAdapter
@@ -18,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class GridFragment : Fragment() {
+    private val TAG = "GridFragment"
 
     private var _binding: FragmentGridBinding? = null
 
@@ -37,12 +40,25 @@ class GridFragment : Fragment() {
 
     }
 
+
+    fun onGridItemClicked(imageInfo: ImageInfo) {
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
         galleryViewModel.galleryImages.observe(viewLifecycleOwner) {
-            _binding?.imagesGridRv?.adapter = it?.let { it1 -> GridRecyclerViewAdapter(it1) }
+            _binding?.imagesGridRv?.adapter = it?.let { it1 ->
+                GridRecyclerViewAdapter(it1,
+                    object : GridRecyclerViewAdapter.GridItemClickListener {
+                        override fun onGridItemClick(item: ImageInfo) {
+                            Log.i(TAG, "onGridItemClick: item clicked ${item.date}")
+                        }
+                    }
+                )
+            }
         }
 
         binding.buttonFirst.setOnClickListener {
