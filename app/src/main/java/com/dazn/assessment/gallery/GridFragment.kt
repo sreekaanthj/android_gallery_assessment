@@ -1,12 +1,10 @@
 package com.dazn.assessment.gallery
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -22,7 +20,6 @@ import timber.log.Timber
  */
 @AndroidEntryPoint
 class GridFragment : Fragment() {
-    private val TAG = "GridFragment"
 
     private var _binding: FragmentGridBinding? = null
 
@@ -64,7 +61,7 @@ class GridFragment : Fragment() {
                 GridRecyclerViewAdapter(it1,
                     object : GridRecyclerViewAdapter.GridItemClickListener {
                         override fun onGridItemClick(item: ImageInfo) {
-                            Log.i(TAG, "onGridItemClick: item clicked ${item.date}")
+                            Timber.v("onGridItemClick: item clicked ${item.date}")
                             onGridItemClicked(item)
                         }
                     }

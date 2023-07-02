@@ -28,7 +28,6 @@ class ImageInfoViewAdapter(private val imageInfos: List<ImageInfo>) :
                 placeholder(R.drawable.baseline_downloading_24)
             }
 
-
         }
     }
 

@@ -1,6 +1,5 @@
 package com.dazn.assessment.gallery.ui
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,6 +7,7 @@ import coil.load
 import com.dazn.assessment.gallery.R
 import com.dazn.assessment.gallery.data.model.ImageInfo
 import com.dazn.assessment.gallery.databinding.ItemGridImageBinding
+import timber.log.Timber
 
 class GridRecyclerViewAdapter(
     private val images: List<ImageInfo>,
@@ -26,7 +26,7 @@ class GridRecyclerViewAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: ImageInfo, gridItemClickListener: GridItemClickListener) {
-            Log.i("GridRecyclerViewAdapter", "bind: loading image:: ${data.title}")
+            Timber.v("bind: loading image:: ${data.title}")
             binding.sampleTxt.text = data.date
 
             binding.gridImg.load(data.url) {
