@@ -14,3 +14,7 @@ data class ImageInfo(
     @SerializedName("url") var url: String? = null
 
 )
+
+fun ImageInfo.fullDetails(): String {
+    return "[$date] $title \n $explanation"
+}

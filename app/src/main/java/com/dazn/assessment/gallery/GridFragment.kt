@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.dazn.assessment.gallery.data.model.ImageInfo
 import com.dazn.assessment.gallery.databinding.FragmentGridBinding
 import com.dazn.assessment.gallery.ui.GalleryViewModel
 import com.dazn.assessment.gallery.ui.GridRecyclerViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -42,12 +44,20 @@ class GridFragment : Fragment() {
 
 
     fun onGridItemClicked(imageInfo: ImageInfo) {
+        val selectedIndex = galleryViewModel.galleryImages.value?.indexOf(imageInfo) ?: 0
 
+        val actionGridFragmentToImageDetailsFragment =
+            GridFragmentDirections.actionGridFragmentToImageDetailsFragment(
+                selectedIndex
+            )
+
+        _binding?.root?.findNavController()?.navigate(actionGridFragmentToImageDetailsFragment)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        Timber.v("GridFragment onViewCreated Called...")
 
         galleryViewModel.galleryImages.observe(viewLifecycleOwner) {
             _binding?.imagesGridRv?.adapter = it?.let { it1 ->
@@ -55,6 +65,7 @@ class GridFragment : Fragment() {
                     object : GridRecyclerViewAdapter.GridItemClickListener {
                         override fun onGridItemClick(item: ImageInfo) {
                             Log.i(TAG, "onGridItemClick: item clicked ${item.date}")
+                            onGridItemClicked(item)
                         }
                     }
                 )

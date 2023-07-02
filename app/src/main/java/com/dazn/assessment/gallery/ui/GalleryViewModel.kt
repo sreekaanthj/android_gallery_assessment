@@ -10,6 +10,7 @@ import com.dazn.assessment.gallery.data.repository.GalleryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,12 @@ class GalleryViewModel @Inject constructor(private val repository:GalleryReposit
         get() = _showLoading
 
     fun loadGallery() {
+        val imagesLeaded = _galleryImages.value?.size ?: 0
+        if (imagesLeaded != 0) {
+            Timber.v("content already loaded")
+            return;
+        }
+
         //show loading status
         _showLoading.value = true
 

@@ -21,8 +21,20 @@
         android:label="@string/image_details_fragment_label"
         tools:layout="@layout/fragment_image_details">
 
+        <argument
+            android:name="selectedImageIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+
         <action
             android:id="@+id/action_ImageDetailsFragment_to_GridFragment"
-            app:destination="@id/GridFragment" />
+            app:destination="@id/GridFragment">
+            <argument
+                android:name="selectedImageIndex"
+                app:argType="integer"
+                android:defaultValue="0" />
+
+        </action>
     </fragment>
 </navigation>
